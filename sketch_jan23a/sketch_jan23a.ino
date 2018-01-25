@@ -20,9 +20,8 @@ void setup() {
   //set lcd size, 16 chars, 2 rows
   lcd.begin(16, 2);
   //clear any data on lcd
-  lcd.clear();
 
-  lcd.print("Pong-Ping");
+redraw();
 
 pinMode(0, INPUT);
 pinMode(1, INPUT);
@@ -42,6 +41,19 @@ void loop() {
   delay(20);
 }
 
+void redraw(){
+  lcd.clear();
+  lcd.print(p1Won);
+  lcd.print(" - ");
+  lcd.print(p2Won);
+    lcd.setCursor(0,1);
+    lcd.print("p1=");
+    lcd.print(p1);
+    lcd.print("  p2=");
+    lcd.print(p2);
+    lcd.print("    ");
+}
+
 void clearLED(){
   digitalWrite(7, LOW);
   digitalWrite(8, LOW);
@@ -51,29 +63,33 @@ void wins(int winner){
   lcd.setCursor(0,1);
   if(winner == 0){
     lcd.print("P1 wins set ");
-    lcd.print(p1);
     p1Won++;
+    lcd.print(p1Won+p2Won);
   }else{
     lcd.print("P2 wins set ");
-    lcd.print(p2);
-    p1Won++;
+    p2Won++;
+    lcd.print(p2Won+p1Won);
   }
+  lcd.setCursor(0,0);
+  lcd.print(p1Won);
+  lcd.print(" - ");
+  lcd.print(p2Won);
 
   if((p2Won>2 || p1Won>2) && p2Won!=p1Won){
+    delay(2500);
     lcd.setCursor(0,1);
     if(p1>p2){
       lcd.print("P1 wins game. ");
     }else{
       lcd.print("P2 wins game. ");
     }
-    
+    p1Won=0;
+    p2Won=0;
   }
-  
-   p1=0;
-   p2=0;
    delay(3000);
    lcd.clear();
-   lcd.print("Pong-Ping");
+   p1=0;
+   p2=0;
    check();
 }
 
@@ -81,23 +97,15 @@ void check(){
   clearLED();
   if(p1<10 && p2<10){
     digitalWrite(7+(p1+p2)/2%2, HIGH);
-    displayScore();
+    redraw();
   }else if((p1-p2)>1){
     wins(0);
   }else if((p1-p2)<-1){
     wins(1);
   }else{
-    displayScore();
+    redraw();
     digitalWrite((7+(p1+p2)%2), HIGH);
   }
-}
-void displayScore(){
-  lcd.setCursor(0,1);
-    lcd.print("p1=");
-    lcd.print(p1);
-    lcd.print("  p2=");
-    lcd.print(p2);
-    lcd.print("    ");
 }
 
 void p1Incriment(){
