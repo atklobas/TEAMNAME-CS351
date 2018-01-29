@@ -4,9 +4,8 @@
 ### CS351 - Assignment 1
 ### Professor Fatma Serce
 
-# TODO (Check)
+# TODO 
 ## After each set, as the players switch side of the table, LCD monitor switches the scores and points as well.
-## After two points the receiver shall become the server, and the server the receiver, and so on after every two points until the end of the game or the score is 10-all. Check if a score of 10-10 is reached in any set, then each server serves only one point and then the server is switched. 
 
 ### Description
 The Arduino was programmed using C. The Arduino setup consists of: 
@@ -22,14 +21,17 @@ The Arduino was programmed using C. The Arduino setup consists of:
 This program will handle button inputs by players to increase or decrease their scores and give them indication about their current score, set score, and indication of who would serve via an LED panel and LED diodes at the ends of the breadboard. 
 
 In addition, this accessory is coded with the following assumptions: 
-1. The match rule setting is set to best of five games. 
-2. To win a match, a player must get 11 points with at least a two-point margin. 
-	2. a. If a game was 10-11, the game will still continue until someone wins by a two-point margin
-	2. b. This game will not handle when both users score in the tripple digits (e.g. 100-100). This is due to LCD output limitations. 
-3. After every two points, the receiver shall become the server and the server the receiver. 
+1. Player 1 starts first. 
+2. The match rule setting is set to best of five games. 
+3. To win a match, a player must get 11 points with at least a two-point margin. 
+	3. a. If a game was 10-11, the game will still continue until someone wins by a two-point margin
+	3. b. This game will not handle when both users score in the tripple digits (e.g. 100-100). This is due to LCD output limitations. 
+4. After every two points, the receiver shall become the server and the server the receiver. 
+5. After every two points, the players switch serving until the end of the game or when the score reaches 10-all. 
+	5. b. However, if the score is 10-10 in any set, each server serves only one point and then switches server. 
+6. (Currently in progress) Players will switch every set and so the scores will switch to their respective side.  
 
 # Electrical Diagram
-
 
 # Clarifications on Instructions
 ### As of 01/28/2018
