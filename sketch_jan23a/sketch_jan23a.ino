@@ -94,7 +94,7 @@ void wins(int winner){
     }else{
       lcd.print("  wins game! -->");
     }
-    flashWinnerLED(7+(p1+p2)/2%2);
+    flashWinnerLED(7 + winner);
     p1Won=0;
     p2Won=0;
   }
