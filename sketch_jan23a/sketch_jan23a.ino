@@ -10,7 +10,7 @@ int p1;
 int p1Won;
 int p2;
 int p2Won;
-int bounce=50;
+int bounce=100;
 boolean won = false;
 int wonAt=0;
 
@@ -44,12 +44,13 @@ void loop() {
 void redraw(){
   lcd.clear();
   lcd.print(p1Won);
-  lcd.print(" - ");
+  lcd.print(" - sets won - ");
   lcd.print(p2Won);
     lcd.setCursor(0,1);
-    lcd.print("p1=");
+    lcd.print("");
     lcd.print(p1);
-    lcd.print("  p2=");
+    lcd.print("            ");
+    lcd.setCursor((p2/10)>0?14:15,1);
     lcd.print(p2);
     lcd.print("    ");
 }
@@ -59,38 +60,52 @@ void clearLED(){
   digitalWrite(8, LOW);
 }
 
+void flashWinnerLED(int winner) {
+  clearLED();
+  for (int i = 0; i < 10; i++) {
+    digitalWrite(winner, HIGH);
+    delay(100);
+    digitalWrite(winner, LOW);
+    delay(100);
+  }
+}
+
 void wins(int winner){
   lcd.setCursor(0,1);
   if(winner == 0){
-    lcd.print("P1 wins set ");
+    lcd.print("<-- wins set    ");
     p1Won++;
     lcd.print(p1Won+p2Won);
   }else{
-    lcd.print("P2 wins set ");
+    lcd.print("    wins set -->");
     p2Won++;
     lcd.print(p2Won+p1Won);
   }
   lcd.setCursor(0,0);
   lcd.print(p1Won);
-  lcd.print(" - ");
+  lcd.print(" - sets won - ");
   lcd.print(p2Won);
 
   if((p2Won>2 || p1Won>2) && p2Won!=p1Won){
     delay(2500);
     lcd.setCursor(0,1);
     if(p1>p2){
-      lcd.print("P1 wins game. ");
+      lcd.print("<-- wins game!  ");
     }else{
-      lcd.print("P2 wins game. ");
+      lcd.print("  wins game! -->");
     }
+    flashWinnerLED(7+(p1+p2)/2%2);
     p1Won=0;
     p2Won=0;
   }
-   delay(3000);
-   lcd.clear();
-   p1=0;
-   p2=0;
-   check();
+  delay(3000);
+  lcd.clear();
+  int temp = p1Won;
+  p1Won = p2Won;
+  p2Won = temp;
+  p1=0;
+  p2=0;
+  check();
 }
 
 void check(){
