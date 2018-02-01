@@ -14,7 +14,7 @@ int bounce=100;
 boolean won = false;
 int wonAt=0;
 
-LiquidCrystal lcd(5,4,10,11,12,13);
+LiquidCrystal lcd(12,11,5,4,3,2);
 
 void setup() {
   //set lcd size, 16 chars, 2 rows
@@ -25,17 +25,17 @@ redraw();
 
 pinMode(0, INPUT);
 pinMode(1, INPUT);
-pinMode(2, INPUT);
-pinMode(3, INPUT);
+pinMode(9, INPUT);
+pinMode(10, INPUT);
  attachInterrupt(digitalPinToInterrupt(0), p1Incriment, RISING);
  attachInterrupt(digitalPinToInterrupt(1), p2Incriment, RISING);
- attachInterrupt(digitalPinToInterrupt(2), p1Decriment, RISING);
- attachInterrupt(digitalPinToInterrupt(3), p2Decriment, RISING);
+ attachInterrupt(digitalPinToInterrupt(9), p1Decriment, RISING);
+ attachInterrupt(digitalPinToInterrupt(10), p2Decriment, RISING);
  check();
 }
 
 void loop() {
-  if(digitalRead(0) || digitalRead(1) || digitalRead(2) || digitalRead(3)){
+  if(digitalRead(0) || digitalRead(1) || digitalRead(9) || digitalRead(10)){
     lastPress=millis();
   }
   delay(20);
@@ -103,6 +103,7 @@ void wins(int winner){
   int temp = p1Won;
   p1Won = p2Won;
   p2Won = temp;
+  lastPress=millis();
   p1=0;
   p2=0;
   check();
