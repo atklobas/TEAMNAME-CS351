@@ -111,7 +111,7 @@ void wins(int winner){
 
 void check(){
   clearLED();
-  if(p1<10 && p2<10){
+  if(p1<11 && p2<11){
     digitalWrite(7+(p1+p2)/2%2, HIGH);
     redraw();
   }else if((p1-p2)>1){
